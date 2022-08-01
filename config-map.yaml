@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-ip
+data:
+  # property-like keys; each key maps to a simple value
+  cluster-ip: "10.8.128.45"

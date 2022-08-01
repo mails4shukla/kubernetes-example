@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+  labels:
+    app: nginx-app
+spec:
+  containers:
+  - name: mypod
+    image: gcr.io/cloud-build-354808/kube-image@sha256:90aecd61947dbef6494f6af056ac2f1d38dfd0c4a94c6d21c0e2dac02ed942f9
+    volumeMounts:
+    - name: foo
+      mountPath: "/etc/foo"
+      readOnly: true
+  volumes:
+  - name: foo
+    configMap:
+      name: mysql-ip
