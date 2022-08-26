@@ -1,18 +1,27 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: mypod
   labels:
-    app: nginx-app
+    app: node-app
 spec:
-  containers:
-  - name: mypod
-    image: gcr.io/cloud-build-354808/kube-image@sha256:90aecd61947dbef6494f6af056ac2f1d38dfd0c4a94c6d21c0e2dac02ed942f9
-    volumeMounts:
-    - name: foo
-      mountPath: "/etc/foo"
-      readOnly: true
-  volumes:
-  - name: foo
-    configMap:
-      name: mysql-ip
+  replicas: 3
+  selector:
+    matchLabels:
+      app: node-app
+  template:
+    metadata:
+      labels:
+        app: node-app
+    spec:
+      containers:
+      - name: mypod
+        image: gcr.io/host-project-354800/node-application@sha256:2ee6f365f8148babe75a3fcb79557d7df248a48106d63fbd5a2d5388bbc43599
+        volumeMounts:
+        - name: foo
+          mountPath: "/etc/foo"
+          readOnly: true
+      volumes:
+      - name: foo
+        configMap:
+          name: mysql-ip
